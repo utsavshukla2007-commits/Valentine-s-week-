@@ -78,7 +78,7 @@ section{
   transform:scale(1.04);
 }
 
-/* POPUP */
+/* POPUP LETTER */
 .popup{
   position:fixed;
   inset:0;
@@ -88,10 +88,7 @@ section{
   justify-content:center;
   z-index:999;
 }
-
-.popup.show{
-  display:flex;
-}
+.popup.show{ display:flex; }
 
 .letter{
   background:#fff4f7;
@@ -103,16 +100,13 @@ section{
   animation:fade .7s ease;
   box-shadow:0 18px 45px rgba(255,92,138,0.35);
 }
-
 @keyframes fade{
   from{opacity:0; transform:translateY(20px);}
   to{opacity:1; transform:translateY(0);}
 }
-
 .letter:hover{
   box-shadow:0 22px 55px rgba(255,92,138,0.45);
 }
-
 .close{
   position:absolute;
   top:12px;
@@ -120,14 +114,12 @@ section{
   cursor:pointer;
   font-size:18px;
 }
-
 .signature{
   text-align:right;
   margin-top:18px;
   font-style:italic;
   color:#ff5c8a;
 }
-
 .heart{
   position:absolute;
   top:-10px;
@@ -135,14 +127,41 @@ section{
   font-size:18px;
   animation:pulse 2.8s infinite;
 }
-
 @keyframes pulse{
   0%{opacity:.4; transform:scale(1);}
   50%{opacity:1; transform:scale(1.15);}
   100%{opacity:.4; transform:scale(1);}
 }
-
 .hidden{display:none;}
+
+/* 🎧 Music Toggle */
+.music-toggle{
+  position:fixed;
+  bottom:18px;
+  right:18px;
+  background:#ff5c8a;
+  color:#fff;
+  width:44px;
+  height:44px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  box-shadow:0 8px 20px rgba(255,92,138,.45);
+  z-index:1000;
+  user-select:none;
+}
+.music-toggle.off{ opacity:.6; }
+
+/* 📝 Hidden Note */
+.last-thing{
+  text-align:center;
+  opacity:.55;
+  cursor:pointer;
+  margin:28px auto 10px;
+  font-style:italic;
+}
 </style>
 
 <script>
@@ -176,7 +195,6 @@ function closeL(id){document.getElementById(id).classList.remove("show");}
 <button onclick="unlock('rose',['pink rose'])">Unlock</button>
 <div id="rose-error" class="error"></div>
 </div>
-
 <div id="rose-content" class="hidden">
 <div class="photos">
 <img src="images/rose1.jpg" onclick="openL('roseL')">
@@ -205,7 +223,6 @@ Siddhi this is our first valentine week my flower is our future I have soo much 
 <button onclick="unlock('promise',['never giving up'])">Unlock</button>
 <div id="promise-error" class="error"></div>
 </div>
-
 <div id="promise-content" class="hidden">
 <div class="photos">
 <img src="images/promise1.jpg" onclick="openL('promiseL')">
@@ -234,7 +251,6 @@ Siddhi promise day ke liye the only and final promise we both have to make is ne
 <button onclick="unlock('hug',['brown'])">Unlock</button>
 <div id="hug-error" class="error"></div>
 </div>
-
 <div id="hug-content" class="hidden">
 <div class="photos">
 <img src="images/hug1.jpg" onclick="openL('hugL')">
@@ -263,7 +279,6 @@ Darling vo 20 mins wali meet toh kabhi recreate nhi kr paunga but hug day pr tum
 <button onclick="unlock('kiss',['tyagraj park'])">Unlock</button>
 <div id="kiss-error" class="error"></div>
 </div>
-
 <div id="kiss-content" class="hidden">
 <div class="photos">
 <img src="images/kiss1.jpg" onclick="openL('kissL')">
@@ -292,7 +307,6 @@ Kissing you always felt tasting what love in purest form would taste uk it ki ph
 <button onclick="unlock('choco',['milky','crispello'])">Unlock</button>
 <div id="choco-error" class="error"></div>
 </div>
-
 <div id="choco-content" class="hidden">
 <div class="photos">
 <img src="images/choco1.jpg" onclick="openL('chocoL')">
@@ -321,7 +335,6 @@ Uk i don't like sweets but seeing your love towards them can make me eat sweets 
 <button onclick="unlock('teddy',['siddhi'])">Unlock</button>
 <div id="teddy-error" class="error"></div>
 </div>
-
 <div id="teddy-content" class="hidden">
 <div class="photos">
 <img src="images/teddy1.jpg" onclick="openL('teddyL')">
@@ -335,7 +348,7 @@ Uk i don't like sweets but seeing your love towards them can make me eat sweets 
 <div class="heart">💗</div>
 <div class="close" onclick="closeL('teddyL')">✖</div>
 <p>
-Mera real teddy bear toh tum hi ho ngl idk but i love you darling squeeze and soft both from outside and inside
+Mera real teddy bear toh tum hi ho fs idk but the more soft and squeezy you are bhai jo home vibe tum deti ho na mujhe that understanding wali siddhi i love her that much ki mai kisi cheez ki complain hi nhi kr sakta
 </p>
 <div class="signature">— Always yours,<br>Utsav</div>
 </div>
@@ -350,7 +363,6 @@ Mera real teddy bear toh tum hi ho ngl idk but i love you darling squeeze and so
 <button onclick="unlock('valentine',['panwadi'])">Unlock</button>
 <div id="valentine-error" class="error"></div>
 </div>
-
 <div id="valentine-content" class="hidden">
 <div class="photos">
 <img src="images/valentine1.jpg" onclick="openL('valentineL')">
@@ -369,36 +381,64 @@ Soo here we are on 14th feb the valentine's day idk the hype around it just a da
 <div class="signature">— Always yours,<br>Utsav</div>
 </div>
 </div>
+
 <!-- 💞 ME TOO / NEVER GIVING UP -->
 <section class="day">
-  <h2>Me Too 🎀💖</h2>
+<h2>Me Too 🎀💖</h2>
+<div class="letter" style="text-align:center;">
+<div class="heart">💗</div>
+<p>
+Me too.<br><br>
+For every fight, every misunderstanding, every distance, every silence —<br><br>
+<strong>never giving up on each other.</strong><br><br>
+Always choosing us.<br>
+Always choosing love.
+</p>
+<div class="signature">— Always yours,<br>Utsav</div>
+</div>
 
-  <div class="letter" style="text-align:center; position:relative;">
-    <div class="heart">💗</div>
+<div class="photos" style="justify-content:center;">
+<img src="images/metoo_now.jpg" style="max-width:180px;">
+</div>
 
-    <p style="font-size:17px; line-height:1.6;">
-      Me too.<br><br>
-      For every fight, every misunderstanding, every distance,
-      every silence — <br><br>
-      <strong>never giving up on each other.</strong><br><br>
-      Always choosing us.<br>
-      Always choosing love.
-    </p>
-
-    <div class="signature">
-      — Always yours,<br>
-      Utsav
-    </div>
-  </div>
-
-  <div class="photos" style="justify-content:center; margin-top:20px;">
-    <img src="images/metoo_now.jpg" style="max-width:180px;">
-  </div>
-
-  <p style="text-align:center; margin-top:12px; opacity:.7;">
-    One polaroid filled.<br>
-    One waiting for the next time we meet 🤍
-  </p>
+<p style="text-align:center; opacity:.7;">
+One polaroid filled.<br>
+One waiting for the next time we meet 🤍
+</p>
 </section>
+
+<div class="last-thing" onclick="openL('lastNote')">
+One last thing…
+</div>
+
+<div class="popup" id="lastNote">
+<div class="letter">
+<div class="heart">💗</div>
+<div class="close" onclick="closeL('lastNote')">✖</div>
+<p>
+No matter how many pages life adds,<br>
+I’ll always choose you.<br><br>
+Again. And again. And again.
+</p>
+<div class="signature">— Always yours,<br>Utsav</div>
+</div>
+</div>
+
+<!-- 🎧 MUSIC -->
+<audio id="bgMusic" loop>
+  <source src="music/theme.mp3" type="audio/mpeg">
+</audio>
+<div class="music-toggle off" id="musicBtn">🎧</div>
+
+<script>
+const music=document.getElementById('bgMusic');
+music.volume=0.35;
+const btn=document.getElementById('musicBtn');
+btn.onclick=()=>{
+  if(music.paused){music.play();btn.classList.remove('off');}
+  else{music.pause();btn.classList.add('off');}
+};
+</script>
+
 </body>
-                                                 </html>
+  </html>
