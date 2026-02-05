@@ -19,7 +19,7 @@ header{
 }
 
 section{
-  max-width:700px;
+  max-width:720px;
   margin:30px auto;
   padding:20px;
 }
@@ -33,7 +33,7 @@ section{
 
 .lock-box{
   text-align:center;
-  margin-bottom:16px;
+  margin-bottom:18px;
 }
 
 .lock-box input{
@@ -69,21 +69,56 @@ section{
   width:100%;
   max-width:160px;
   border-radius:12px;
+  cursor:pointer;
   box-shadow:0 6px 14px rgba(0,0,0,0.2);
+  transition:transform .2s ease;
+}
+
+.photos img:hover{
+  transform:scale(1.04);
+}
+
+/* POPUP */
+.popup{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.55);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:999;
+}
+
+.popup.show{
+  display:flex;
 }
 
 .letter{
   background:#fff4f7;
-  padding:22px;
-  border-radius:14px;
-  box-shadow:0 8px 18px rgba(255,92,138,0.25);
-  margin-top:16px;
-  animation:fadeIn .6s ease;
+  max-width:520px;
+  width:90%;
+  padding:28px;
+  border-radius:18px;
+  position:relative;
+  animation:fade .7s ease;
+  box-shadow:0 18px 45px rgba(255,92,138,0.35);
 }
 
-@keyframes fadeIn{
-  from{opacity:0; transform:translateY(6px);}
+@keyframes fade{
+  from{opacity:0; transform:translateY(20px);}
   to{opacity:1; transform:translateY(0);}
+}
+
+.letter:hover{
+  box-shadow:0 22px 55px rgba(255,92,138,0.45);
+}
+
+.close{
+  position:absolute;
+  top:12px;
+  right:16px;
+  cursor:pointer;
+  font-size:18px;
 }
 
 .signature{
@@ -93,54 +128,35 @@ section{
   color:#ff5c8a;
 }
 
-.hidden{ display:none; }
-
-.me-too{
-  text-align:center;
+.heart{
+  position:absolute;
+  top:-10px;
+  right:18px;
+  font-size:18px;
+  animation:pulse 2.8s infinite;
 }
 
-.polaroids{
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  gap:16px;
-  margin-top:20px;
+@keyframes pulse{
+  0%{opacity:.4; transform:scale(1);}
+  50%{opacity:1; transform:scale(1.15);}
+  100%{opacity:.4; transform:scale(1);}
 }
 
-.polaroid{
-  background:white;
-  padding:10px;
-  width:150px;
-  box-shadow:0 6px 16px rgba(0,0,0,0.2);
-}
-
-.polaroid img{
-  width:100%;
-}
-
-.empty{
-  border:2px dashed #ff8fab;
-}
+.hidden{display:none;}
 </style>
 
 <script>
 function unlock(day, answers){
-  const inputEl = document.getElementById(day+"-input");
-  const box = document.getElementById(day+"-box");
-  const content = document.getElementById(day+"-content");
-  const error = document.getElementById(day+"-error");
-
-  const value = inputEl.value.trim().toLowerCase();
-  const ok = answers.some(a => value.includes(a));
-
-  if(ok){
-    content.classList.remove("hidden");
-    box.style.display = "none";   // ✅ FIX 1
-    error.innerText = "";
+  const v=document.getElementById(day+"-input").value.trim().toLowerCase();
+  if(answers.some(a=>v.includes(a))){
+    document.getElementById(day+"-content").classList.remove("hidden");
+    document.getElementById(day+"-box").style.display="none";
   }else{
-    error.innerText = "Almost… try again 💗";
+    document.getElementById(day+"-error").innerText="Almost… try again 💗";
   }
 }
+function openL(id){document.getElementById(id).classList.add("show");}
+function closeL(id){document.getElementById(id).classList.remove("show");}
 </script>
 </head>
 
@@ -148,10 +164,10 @@ function unlock(day, answers){
 
 <header>
 <h1>Our Valentine Week 💗</h1>
-<p>Not days. Just us.</p>
+<p>Click memories. Read feelings.</p>
 </header>
 
-<!-- ROSE DAY -->
+<!-- 🌹 ROSE DAY -->
 <section class="day">
 <h2>🌹 Rose Day</h2>
 <div class="lock-box" id="rose-box">
@@ -163,27 +179,24 @@ function unlock(day, answers){
 
 <div id="rose-content" class="hidden">
 <div class="photos">
-<img src="images/rose1.jpg">
-<img src="images/rose2.jpg">
-</div>
-<div class="letter">
-<p>
-<strong>Siddhi,</strong><br><br>
-this is our first Valentine week.<br><br>
-My flower is our future.
-I have so much hope in our future — I know it will bloom so brightly.<br><br>
-Oh my love, I don’t know how to explain how much I love you, Siddhi.<br><br>
-The flower for Rose Day, I’ll give it to you for sure —
-either after Valentine’s, because I’m making this the night before Valentine week starts 😭<br><br>
-Baby, I love you.
-I love you way too much.
-</p>
-<div class="signature">— Always yours,<br>Utsav</div>
+<img src="images/rose1.jpg" onclick="openL('roseL')">
+<img src="images/rose2.jpg" onclick="openL('roseL')">
 </div>
 </div>
 </section>
 
-<!-- PROMISE DAY -->
+<div class="popup" id="roseL">
+<div class="letter">
+<div class="heart">💗</div>
+<div class="close" onclick="closeL('roseL')">✖</div>
+<p>
+Siddhi this is our first valentine week my flower is our future I have soo much hope in our future that it will bloom soo brightly ohh my love idk but how much I love you siddhi flowers day ka flower mai de dunga fs ya toh valentine ke baad use pehle toh nhi cause valentine week start honse se ek raat pehle bana raha hu 😭 but bbg I love you I love you wayy too much
+</p>
+<div class="signature">— Always yours,<br>Utsav</div>
+</div>
+</div>
+
+<!-- 🤝 PROMISE DAY -->
 <section class="day">
 <h2>🤝 Promise Day</h2>
 <div class="lock-box" id="promise-box">
@@ -195,21 +208,24 @@ I love you way too much.
 
 <div id="promise-content" class="hidden">
 <div class="photos">
-<img src="images/promise1.jpg">
-<img src="images/promise2.jpg">
-</div>
-<div class="letter">
-<p>
-<strong>Siddhi,</strong><br><br>
-the only and final promise we both have to make is never giving up on each other.<br><br>
-And I promise — I’m not going anywhere without you 🫶🏻
-</p>
-<div class="signature">— Always yours,<br>Utsav</div>
+<img src="images/promise1.jpg" onclick="openL('promiseL')">
+<img src="images/promise2.jpg" onclick="openL('promiseL')">
 </div>
 </div>
 </section>
 
-<!-- HUG DAY -->
+<div class="popup" id="promiseL">
+<div class="letter">
+<div class="heart">💗</div>
+<div class="close" onclick="closeL('promiseL')">✖</div>
+<p>
+Siddhi promise day ke liye the only and final promise we both have to make is never giving up on each other dekho agar pyar kartein hai toh cheat vagera toh possible hi nhi toh bs promise khali never giving up ka hai bbg and I promise I ain't going anywhere without you 🫶🏻
+</p>
+<div class="signature">— Always yours,<br>Utsav</div>
+</div>
+</div>
+
+<!-- 🤗 HUG DAY -->
 <section class="day">
 <h2>🤗 Hug Day</h2>
 <div class="lock-box" id="hug-box">
@@ -221,19 +237,24 @@ And I promise — I’m not going anywhere without you 🫶🏻
 
 <div id="hug-content" class="hidden">
 <div class="photos">
-<img src="images/hug1.jpg">
-<img src="images/hug2.jpg">
-</div>
-<div class="letter">
-<p>
-that hug always reminds me I belong to someone who loves me deeply 🫂
-</p>
-<div class="signature">— Always yours,<br>Utsav</div>
+<img src="images/hug1.jpg" onclick="openL('hugL')">
+<img src="images/hug2.jpg" onclick="openL('hugL')">
 </div>
 </div>
 </section>
 
-<!-- KISS DAY -->
+<div class="popup" id="hugL">
+<div class="letter">
+<div class="heart">💗</div>
+<div class="close" onclick="closeL('hugL')">✖</div>
+<p>
+Darling vo 20 mins wali meet toh kabhi recreate nhi kr paunga but hug day pr tumse duur or mai hug tk nhi kr paunga missing it now only but we should make a pact ki can ever we meet we will hug jitna jada kr saktein hai taki baad ke liye vo hug vo touch yaad dilata rahe ki yess I belong to someone there is someone who loves me more than anyone 🫂
+</p>
+<div class="signature">— Always yours,<br>Utsav</div>
+</div>
+</div>
+
+<!-- 💋 KISS DAY -->
 <section class="day">
 <h2>💋 Kiss Day</h2>
 <div class="lock-box" id="kiss-box">
@@ -245,43 +266,53 @@ that hug always reminds me I belong to someone who loves me deeply 🫂
 
 <div id="kiss-content" class="hidden">
 <div class="photos">
-<img src="images/kiss1.jpg">
-<img src="images/kiss2.jpg">
-</div>
-<div class="letter">
-<p>
-kissing you feels like tasting love in its purest form 💋💗
-</p>
-<div class="signature">— Always yours,<br>Utsav</div>
+<img src="images/kiss1.jpg" onclick="openL('kissL')">
+<img src="images/kiss2.jpg" onclick="openL('kissL')">
 </div>
 </div>
 </section>
 
-<!-- CHOCOLATE DAY -->
+<div class="popup" id="kissL">
+<div class="letter">
+<div class="heart">💗</div>
+<div class="close" onclick="closeL('kissL')">✖</div>
+<p>
+Kissing you always felt tasting what love in purest form would taste uk it ki physical intimacy for me is much important and hugs and kisses are the only thing which makes me relieved soo let's pact to kiss for our whole lyf my love 💋💋💗
+</p>
+<div class="signature">— Always yours,<br>Utsav</div>
+</div>
+</div>
+
+<!-- 🍫 CHOCOLATE DAY -->
 <section class="day">
 <h2>🍫 Chocolate Day</h2>
 <div class="lock-box" id="choco-box">
 <p>Siddhi's fav chocolate</p>
 <input id="choco-input">
-<button onclick="unlock('choco',['milky','milky bar','crispello'])">Unlock</button>
+<button onclick="unlock('choco',['milky','crispello'])">Unlock</button>
 <div id="choco-error" class="error"></div>
 </div>
 
 <div id="choco-content" class="hidden">
 <div class="photos">
-<img src="images/choco1.jpg">
-<img src="images/choco2.jpg">
-</div>
-<div class="letter">
-<p>
-I don’t like sweets but for you, I’ll eat them all 😋
-</p>
-<div class="signature">— Always yours,<br>Utsav</div>
+<img src="images/choco1.jpg" onclick="openL('chocoL')">
+<img src="images/choco2.jpg" onclick="openL('chocoL')">
 </div>
 </div>
 </section>
 
-<!-- TEDDY DAY -->
+<div class="popup" id="chocoL">
+<div class="letter">
+<div class="heart">💗</div>
+<div class="close" onclick="closeL('chocoL')">✖</div>
+<p>
+Uk i don't like sweets but seeing your love towards them can make me eat sweets too but choclate day isn't about sweets only it's about the real sweetness in relationship or hamare rishtey mai toh mithadas hi hai kitni bhi ladai krle sorry toh mujhe hi bolna hai Milky bar and crispello ke sath huhh 😋😭🫶🏻
+</p>
+<div class="signature">— Always yours,<br>Utsav</div>
+</div>
+</div>
+
+<!-- 🧸 TEDDY DAY -->
 <section class="day">
 <h2>🧸 Teddy Day</h2>
 <div class="lock-box" id="teddy-box">
@@ -293,19 +324,24 @@ I don’t like sweets but for you, I’ll eat them all 😋
 
 <div id="teddy-content" class="hidden">
 <div class="photos">
-<img src="images/teddy1.jpg">
-<img src="images/teddy2.jpg">
-</div>
-<div class="letter">
-<p>
-my real teddy bear has always been you 🤍
-</p>
-<div class="signature">— Always yours,<br>Utsav</div>
+<img src="images/teddy1.jpg" onclick="openL('teddyL')">
+<img src="images/teddy2.jpg" onclick="openL('teddyL')">
 </div>
 </div>
 </section>
 
-<!-- VALENTINE DAY -->
+<div class="popup" id="teddyL">
+<div class="letter">
+<div class="heart">💗</div>
+<div class="close" onclick="closeL('teddyL')">✖</div>
+<p>
+Mera real teddy bear toh tum hi ho ngl idk but i love you darling squeeze and soft both from outside and inside
+</p>
+<div class="signature">— Always yours,<br>Utsav</div>
+</div>
+</div>
+
+<!-- ❤️ VALENTINE DAY -->
 <section class="day">
 <h2>❤️ Valentine’s Day</h2>
 <div class="lock-box" id="valentine-box">
@@ -317,32 +353,22 @@ my real teddy bear has always been you 🤍
 
 <div id="valentine-content" class="hidden">
 <div class="photos">
-<img src="images/valentine1.jpg">
-<img src="images/valentine2.jpg">
+<img src="images/valentine1.jpg" onclick="openL('valentineL')">
+<img src="images/valentine2.jpg" onclick="openL('valentineL')">
 </div>
+</div>
+</section>
+
+<div class="popup" id="valentineL">
 <div class="letter">
+<div class="heart">💗</div>
+<div class="close" onclick="closeL('valentineL')">✖</div>
 <p>
-every day with you matters more than one special date 💗
+Soo here we are on 14th feb the valentine's day idk the hype around it just a day with your loved one yaa toh har din special hoga har din pyar mohabbat same rahegi vrna ek din ke peak toh L hai but in our relationship vo constant pyar jo chlra hai mannn that shyt is sooo loveable and tumhara forgiving nature holds everything soo much together thanks siddhi for always being what I craved for always being my safe place I promise I will be doing more than last year and i promise hrr valentine's week pr tumhe merse hi gifts milenge darling 💗😋😭😭😭
 </p>
 <div class="signature">— Always yours,<br>Utsav</div>
 </div>
 </div>
-</section>
-
-<!-- ME TOO -->
-<section class="me-too">
-<h2>Me Too 🎀💖</h2>
-<div class="polaroids">
-<div class="polaroid">
-<img src="images/metoo_now.jpg">
-<p>Us. Right now.</p>
-</div>
-<div>💗 — 💗 — 💗</div>
-<div class="polaroid empty">
-<p>Waiting to be filled when we meet next 🤍</p>
-</div>
-</div>
-</section>
 
 </body>
-  </html>
+                                                 </html>
